@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.venv/
+.env
+.env.*
+
+# Playwright
+playwright-report/
+test-results/
+.playwright/
+**/ms-playwright/
+**/.local-browsers/
+
+# PyInstaller / build artifacts
+build/
+dist/
+*.spec
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Output from the tool
+output/
+*.pdf
+*.png
+
+# IDEs
+.vscode/
+.idea/
