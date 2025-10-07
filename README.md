@@ -78,11 +78,11 @@ git pull
 Open **Terminal (macOS)** or **Command Prompt / PowerShell (Windows)** and run these inside the project folder:
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip setuptools wheel
-python -m pip install -r requirements.txt
-python -m playwright install chromium
+python3 -m pip install --upgrade pip setuptools wheel
+python3 -m pip install -r requirements.txt
+python3 -m playwright install chromium
 ```
 
 Now you’re ready to run the tool.
@@ -93,7 +93,7 @@ Now you’re ready to run the tool.
 
 ### A) One URL
 ```bash
-python -m app.main "https://www.example.com" --defloat --isi-reached \
+python3 -m app.main "https://www.example.com" --defloat --isi-reached \
   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 **What this does**
@@ -105,14 +105,14 @@ python -m app.main "https://www.example.com" --defloat --isi-reached \
 Put your links into `urls.txt`. Lines can be separated by **new lines**, **tabs**, **commas**, or **spaces**. Comments starting with `#` are ignored.
 
 ```bash
-python -m app.main --url-list urls.txt --defloat --isi-reached \
+python3 -m app.main --url-list urls.txt --defloat --isi-reached \
   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 
 ### C) A sitemap XML file
 If you have `sitemap.xml` in the project folder:
 ```bash
-python -m app.main --sitemap-file sitemap.xml --defloat --isi-reached \
+python3 -m app.main --sitemap-file sitemap.xml --defloat --isi-reached \
   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 
@@ -162,20 +162,20 @@ page1_dt, page1_mb, page2_dt, page2_mb, ...
 
 **List of URLs with staging certs + longer timeout:**
 ```bash
-python -m app.main --url-list urls.txt -o shots --insecure --timeout-ms 120000 \
+python3 -m app.main --url-list urls.txt -o shots --insecure --timeout-ms 120000 \
   --defloat --isi-reached \
   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 
 **Sitemap excluding PDFs/images (default behavior):**
 ```bash
-python -m app.main --sitemap-file sitemap.xml --defloat --isi-reached \
+python3 -m app.main --sitemap-file sitemap.xml --defloat --isi-reached \
   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 
 **Single page quick test:**
 ```bash
-python -m app.main "https://www.uzedy.com/living-with-schizophrenia" --defloat --isi-reached \
+python3 -m app.main "https://www.uzedy.com/living-with-schizophrenia" --defloat --isi-reached \
   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 
@@ -185,14 +185,14 @@ python -m app.main "https://www.uzedy.com/living-with-schizophrenia" --defloat -
 If you cloned via Git:
 ```bash
 git pull
-python -m pip install -r requirements.txt
-python -m playwright install chromium
+python3 -m pip install -r requirements.txt
+python3 -m playwright install chromium
 ```
 
 If you downloaded a ZIP: replace the folder with the new one, then run:
 ```bash
-python -m pip install -r requirements.txt
-python -m playwright install chromium
+python3 -m pip install -r requirements.txt
+python3 -m playwright install chromium
 ```
 
 ---
@@ -203,10 +203,10 @@ python -m playwright install chromium
 Use `--insecure` for staging/dev sites with custom or invalid certificates.
 
 **❌ Playwright complains about missing browsers**  
-Run: `python -m playwright install chromium`
+Run: `python3 -m playwright install chromium`
 
 **❌ Command not found / permissions (macOS)**  
-Use the `python -m` form exactly as shown. If downloads are blocked, connect to VPN first.
+Use the `python3 -m` form exactly as shown. If downloads are blocked, connect to VPN first.
 
 **❌ Screenshots look “shifted” after hiding a cookie banner**  
 Make sure you included `--hide-selectors` with the OneTrust selectors shown above. The app also clears banner‑added top offsets automatically.
