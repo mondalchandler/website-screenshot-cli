@@ -1,4 +1,4 @@
-# Website Screenshot CLI — Beginner‑Friendly Guide
+# Website Screenshot CLI — Beginner-Friendly Guide
 
 This tool captures **full‑page desktop and mobile screenshots** of one or many web pages and merges them into a single, timestamped PDF. It also handles common website quirks like sticky headers, cookie banners, animations, and “Important Safety Information (ISI)” blocks.
 
@@ -15,61 +15,20 @@ This tool captures **full‑page desktop and mobile screenshots** of one or many
 
 ---
 
-## Two ways to get the project
-
-### Option A — Download the ZIP (no Git needed)
-1. Get the ZIP from your team (or GitHub’s “Download ZIP”).  
-2. Unzip it somewhere easy, like your Desktop. You should now have a folder such as `website-screenshot-cli/`.
-
-### Option B — Use Git (recommended for updates)
-> If you don’t have Git yet, install it in a few minutes and you’ll be able to update with a single command.
-
-**Install Git**
-- **macOS (with Homebrew):**
-  ```bash
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  brew install git
-  ```
-  (If you don’t want Homebrew, you can also install Git via Xcode Command Line Tools: `xcode-select --install`.)
-
-- **Windows:**
-  1. Download the Git for Windows installer from https://git-scm.com/download/win
-  2. Run it and keep the defaults. After install, re-open PowerShell or Command Prompt.
-
-**Verify Git is installed**
-```bash
-git --version
-```
-You should see something like `git version 2.xx.x`.
-
-**Clone the repository**
-```bash
-# Pick a folder where you want the project (e.g., Desktop), then:
-git clone https://github.com/mondalchandler/website-screenshot-cli.git
-cd website-screenshot-cli
-```
-
-**Pull the latest updates (later on)**
-```bash
-cd website-screenshot-cli
-git pull
-```
-
----
-
 ## Requirements (once per computer)
-
 1. **Python 3.10+** (3.11 or 3.12 recommended)
-   - **macOS** (with Homebrew):
+   - **macOS**: Install Homebrew (if you don’t have it), then:
      ```bash
+     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
      brew install python
      ```
    - **Windows**: Download “Python (64‑bit)” from https://www.python.org/downloads/ and install. During install, **check “Add Python to PATH.”**
 
-2. **Project files** (from the ZIP **or** `git clone` in the steps above)
+2. **Project files** (from your team ZIP or repo)
+   - You should have a folder like `website-screenshot-cli` that contains an `app/` folder with `main.py`, `requirements.txt`, etc.
 
-3. **Playwright browsers** (automatic web driver)  
-   We’ll install this right after the Python dependencies (see Quick Start).
+3. **Playwright browsers** (automatic web driver)
+   - We’ll install this right after the Python dependencies (see Quick Start).
 
 > If your company uses a proxy or secure network, you may need to connect to VPN first.
 
@@ -102,8 +61,7 @@ Now you’re ready to run the tool.
 
 ### A) One URL
 ```bash
-python -m app.main "https://www.example.com" --defloat --isi-reached \
-  --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
+python -m app.main "https://www.example.com" --defloat --isi-reached   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 **What this does**
 - `--defloat` : Converts sticky/fixed elements so they don’t overlap in the screenshot.
@@ -114,15 +72,13 @@ python -m app.main "https://www.example.com" --defloat --isi-reached \
 Put your links into `urls.txt`. Lines can be separated by **new lines**, **tabs**, **commas**, or **spaces**. Comments starting with `#` are ignored.
 
 ```bash
-python -m app.main --url-list urls.txt --defloat --isi-reached \
-  --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
+python -m app.main --url-list urls.txt --defloat --isi-reached   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 
 ### C) A sitemap XML file
 If you have `sitemap.xml` in the project folder:
 ```bash
-python -m app.main --sitemap-file sitemap.xml --defloat --isi-reached \
-  --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
+python -m app.main --sitemap-file sitemap.xml --defloat --isi-reached   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 
 ### Optional flags you might need
@@ -136,10 +92,10 @@ python -m app.main --sitemap-file sitemap.xml --defloat --isi-reached \
 
 ## What the app does for you (automatically)
 - **Finishes animations**: it scrolls down the page and forces elements into their final “visible” state before capturing.
-- **ISI behavior**: adds the `reached` class to ISI sections so they render where they belong—**not** pinned at the top.
+- **ISI behavior**: adding the `reached` class to ISI sections so they render where they belong—**not** pinned at the top.
 - **Deflating sticky elements**: turns `position:fixed/sticky` into a safe layout so they don’t overlap content in full‑page captures.
-- **Cookie banners**: when you pass `--hide-selectors`, the app hides the elements **and** clears leftover body offsets many banners add.
-- **Duplicate names**: when two pages share the same last URL segment (e.g., “thank-you-page”), the app tries `parent-child` first, then `slug-2`, `slug-3`, etc.
+- **Cookie banners**: if you pass `--hide-selectors`, it hides the elements and also **clears leftover body offsets** many banners add.
+- **Duplicate names**: when two pages share the same last URL segment (e.g., “thank-you-page”), we try `parent-child` first, then `slug-2`, `slug-3`, etc.
 - **Progress + ETA**: prints a friendly counter with estimated time remaining.
 - **Cleans old PNGs**: removes any `*.png` from `output/desktop` and `output/mobile` at the start of each run.
 - **PDF output name**: always `screenshots_YYYYMMDD-HHMMSS.pdf` in the output folder.
@@ -171,57 +127,56 @@ page1_dt, page1_mb, page2_dt, page2_mb, ...
 
 **List of URLs with staging certs + longer timeout:**
 ```bash
-python -m app.main --url-list urls.txt -o shots --insecure --timeout-ms 120000 \
-  --defloat --isi-reached \
-  --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
+python -m app.main --url-list urls.txt -o shots --insecure --timeout-ms 120000   --defloat --isi-reached   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 
 **Sitemap excluding PDFs/images (default behavior):**
 ```bash
-python -m app.main --sitemap-file sitemap.xml --defloat --isi-reached \
-  --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
+python -m app.main --sitemap-file sitemap.xml --defloat --isi-reached   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 
 **Single page quick test:**
 ```bash
-python -m app.main "https://www.uzedy.com/living-with-schizophrenia" --defloat --isi-reached \
-  --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
+python -m app.main "https://www.uzedy.com/living-with-schizophrenia" --defloat --isi-reached   --hide-selectors "#onetrust-banner-sdk,.otFlat,.ot-sdk-row,.ot-sdk-container,.onetrust-close-btn-handler,.ot-pc-refuse-all-handler"
 ```
 
 ---
 
-## Updating (when you receive a new version)
-If you cloned via Git:
-```bash
-git pull
-python -m pip install -r requirements.txt
-python -m playwright install chromium
-```
-
-If you downloaded a ZIP: replace the folder with the new one, then run:
-```bash
-python -m pip install -r requirements.txt
-python -m playwright install chromium
-```
+## Tips
+- If a popup appears on first load, use `--hide-selectors` for its closeable container if you want only the underlying page. (If your team later adds dedicated “popup‑only” capture logic, the README can be updated.)
+- For **very long** or **heavy** pages, increase `--timeout-ms` and try again.
+- If animations still appear mid‑transition, remove `--no-settle` (or don’t use it). The default behavior already tries to finish animations for you.
 
 ---
 
 ## Troubleshooting
 
-**❌ “net::ERR_CERT_AUTHORITY_INVALID”**  
-Use `--insecure` for staging/dev sites with custom or invalid certificates.
+**❌ “net::ERR_CERT_AUTHORITY_INVALID”**
+- Use `--insecure` for staging/dev sites with custom or invalid certificates.
 
-**❌ Playwright complains about missing browsers**  
-Run: `python -m playwright install chromium`
+**❌ Playwright complains about missing browsers**
+- Run: `python -m playwright install chromium`
 
-**❌ Command not found / permissions (macOS)**  
-Use the `python -m` form exactly as shown. If downloads are blocked, connect to VPN first.
+**❌ Command not found / permissions (macOS)**
+- Prefix with `python -m` exactly as shown.
+- If your company blocks downloads, connect to VPN before installing.
 
-**❌ Screenshots look “shifted” after hiding a cookie banner**  
-Make sure you included `--hide-selectors` with the OneTrust selectors shown above. The app also clears banner‑added top offsets automatically.
+**❌ Screenshots look “shifted” after hiding a cookie banner**
+- Make sure you included `--hide-selectors` with the OneTrust selectors shown above. The tool also clears banner‑added top offsets automatically.
 
-**❌ Very slow pages**  
-Bump timeout: `--timeout-ms 120000` or `180000`. Close unused apps or browser tabs.
+**❌ Very slow pages**
+- Bump timeout: `--timeout-ms 120000` or `180000`.
+- Close unused apps or browser tabs.
+
+---
+
+## Updating the tool
+When your teammates receive an updated ZIP or repo, do this inside the project folder:
+```bash
+# If using a venv, activate it first (see Quick Start)
+python -m pip install -r requirements.txt
+python -m playwright install chromium
+```
 
 ---
 
@@ -235,18 +190,73 @@ rm -rf output
 
 ---
 
-## Contributing (Git users)
-1. Create a new branch: `git checkout -b feature/my-change`
-2. Commit small, focused changes: `git commit -m "feat: add popup-only capture"`
-3. Push and open a PR: `git push origin feature/my-change`
-4. Ask a teammate to review.
-
----
-
 ## Need help?
 Share:
 - Your exact command
 - A sample URL
 - The Terminal output/error
+This helps the team reproduce and fix quickly.
 
-That info helps the team reproduce and fix quickly.
+## Installing Homebrew (macOS)
+
+> **Note:** Homebrew is optional for this project. You can install Python directly from python.org and skip Brew. These steps are provided in case you prefer managing tools with Homebrew.
+
+### 1) Install Apple Command Line Tools (recommended)
+This ensures `git`, compilers, and headers are available.
+```bash
+xcode-select --install
+```
+
+### 2) Install Homebrew
+Paste the official installer command into Terminal (no smart quotes, no extra characters):
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+### 3) Add Homebrew to your PATH
+- Apple Silicon (M1/M2/M3):
+  ```bash
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  ```
+- Intel mac:
+  ```bash
+  echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
+  eval "$(/usr/local/bin/brew shellenv)"
+  ```
+
+Verify:
+```bash
+brew --version
+brew doctor
+```
+
+### Troubleshooting SSL errors during install (corporate networks)
+If you see `curl: (60) SSL certificate problem: unable to get local issuer certificate` when running the installer, your network may be intercepting TLS.
+
+Try these, in order:
+
+1. **Simple checks**
+   - Make sure your Mac’s date/time are correct.
+   - Disconnect from VPN or try a different network (hotspot) to confirm it’s a network policy issue.
+
+2. **Use macOS system trust store for curl**
+   ```bash
+   /usr/bin/security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain > ~/cacert.pem
+   export SSL_CERT_FILE=~/cacert.pem
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+3. **If your company provides a corporate root certificate (preferred)**
+   - Import it into Keychain Access and set to **Always Trust**.
+   - Export the certificate to a file (e.g., `~/corp_root_ca.pem`), then:
+     ```bash
+     export SSL_CERT_FILE=~/corp_root_ca.pem
+     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+     ```
+
+If none of the above helps, install Homebrew from a home/hotspot network once. It will continue to work on the corporate network afterward.
+
+### Linux
+Homebrew also supports Linux (“Linuxbrew”). See the official docs:
+https://docs.brew.sh/Homebrew-on-Linux
