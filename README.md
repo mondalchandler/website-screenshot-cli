@@ -44,7 +44,6 @@ You should see something like `git version 2.xx.x`.
 
 **Clone the repository**
 ```bash
-# Pick a folder where you want the project (e.g., Desktop), then:
 git clone https://github.com/mondalchandler/website-screenshot-cli.git
 cd website-screenshot-cli
 ```
@@ -79,18 +78,10 @@ git pull
 Open **Terminal (macOS)** or **Command Prompt / PowerShell (Windows)** and run these inside the project folder:
 
 ```bash
-# 1) (Optional but recommended) Create and activate a virtual environment
 python -m venv .venv
-# macOS / Linux:
 source .venv/bin/activate
-# Windows (PowerShell):
-# .venv\Scripts\Activate.ps1
-
-# 2) Install dependencies
 python -m pip install --upgrade pip setuptools wheel
 python -m pip install -r requirements.txt
-
-# 3) Install a Playwright browser (Chromium)
 python -m playwright install chromium
 ```
 
